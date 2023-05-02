@@ -97,6 +97,7 @@ public class UserVO {
 	}
 
 	public String getUserStatus() {
+
 		return userStatus;
 	}
 
@@ -172,4 +173,3 @@ public class UserVO {
 	
 	
 }
-	

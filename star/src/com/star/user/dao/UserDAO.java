@@ -1,10 +1,7 @@
 package com.star.user.dao;
 
 
-
-
 import java.util.HashMap;
-
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,21 +16,45 @@ public class UserDAO {
 	public UserDAO() {
 		sqlSession = MyBatisConfig.getSqlSessionFactory().openSession(true);
 	}
-//	로그인
-	public Long login(String userId,String userPassword) {
-		HashMap<String, String> loginMap = new HashMap<String,String>();
-		loginMap.put("userId", userId);
-		loginMap.put("userPassword", userPassword); 
-		return sqlSession.selectOne("user.login", loginMap);
-	}
+	
+	//회원가입
 
-//	public void insert(UserVO userVO) {
-//		sqlSession.insert("user.insert", userVO);
-//	}
-//	
-//	public UserVO selectSitter(Long userId) {
-//		return sqlSession.selectOne("user.select", userId);
-//	}
+	public void insert(UserVO userVO) {
+		sqlSession.insert("user.insert" , userVO);
+	}
+	
+	//로그인
+	
+	public void select(Long usernumber) {
+		sqlSession.selectOne("user.select",usernumber);
+	}
+	
+	public void findPW(String userId) {
+		sqlSession.selectOne("user.findPW",userId);
+	}
+	
+	//아이디 중복 검사
+	
+	public boolean getcountid(String userId) {
+		return (Integer)sqlSession.selectOne("user.getcountid", userId)==0;
+	}
+	
+	public Long login(String userId, String userPassword) {
+		HashMap<String, Object> loginmap = new HashMap<String, Object>();
+		loginmap.put("userId",userId);
+		loginmap.put("userPassword",userPassword);
+		
+		return sqlSession.selectOne("user.login",loginmap);
+	}
+	
+
+//	로그인
+
+
+	
+	public UserVO selectSitter(Long userId) {
+		return sqlSession.selectOne("user.select", userId);
+	}
 	
 //	펫시터 상세보기
 	public UserVO selectSitterdetail(Long userNumber) {
@@ -44,9 +65,11 @@ public class UserDAO {
 		return sqlSession.selectList("user.selectAllSitter", keyword);
 	}
 
+//	메인페이지 돌봄이 신청자 가져오기
 	public List<UserVO> selectCurrentSitters(){
 		return sqlSession.selectList("user.selectCurrentSitters");
 	}
+	
 	
 	//이름바꾸기
 	public void updateName(String userName, Long userNumber) {
@@ -115,6 +138,7 @@ public class UserDAO {
 	public void delete(Long userId) {
 		sqlSession.delete("userAdmin.delete", userId);
 	}
+
 
 
 }

@@ -9,8 +9,6 @@ import com.star.mybatis.config.MyBatisConfig;
 import com.star.report.domain.ReportDTO;
 import com.star.report.domain.Search;
 
-import com.star.user.domain.UserVO;
-
 public class ReportDAO {
 public SqlSession sqlSession;
 
@@ -35,9 +33,10 @@ public SqlSession sqlSession;
 
 
 
-   public List<ReportDTO> selectAll(HashMap<String, Object> pagable){
-      return sqlSession.selectList("report.selectAll", pagable);
-   }
+	/*
+	 * public List<ReportDTO> selectAll(HashMap<String, Object> pagable){ return
+	 * sqlSession.selectList("report.selectAll", pagable); }
+	 */
    
    public int getTotal(){
       return sqlSession.selectOne("report.getTotal");
